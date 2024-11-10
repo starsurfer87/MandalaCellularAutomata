@@ -1,5 +1,5 @@
 
-  
+
 final int LEVELS = 7;
 final int LEVEL_HEIGHT = 50;
 final int SIZE = 2*LEVELS*LEVEL_HEIGHT;
@@ -14,10 +14,10 @@ final float PROB = 0.5;
 int[][] cells;
 
 void settings() {
-   size(SIZE, SIZE);
+  size(SIZE, SIZE);
 }
 
-void setup() { 
+void setup() {
   cells = new int[LEVELS][];
   for (int i=0; i<LEVELS; i++) {
     cells[i] = new int[int(pow(2, i))];
@@ -30,7 +30,7 @@ void setup() {
 void draw() {
   for (int i=LEVELS-1; i>=0; i--) {
     int len = cells[i].length;
-    for (int j=0; j < len; j++) { 
+    for (int j=0; j < len; j++) {
       fill(getColor(cells[i][j]));
       for (int k=0; k<8; k++) {
         arc(SIZE/2, SIZE/2, (2*(i+1)-1)*LEVEL_HEIGHT, (2*(i+1)-1)*LEVEL_HEIGHT, k*PI/4 + j*PI/(4*len), k*PI/4 + (j+1)*PI/(4*len));
@@ -42,36 +42,36 @@ void draw() {
 
 color getColor(int c) {
   switch (c) {
-        case PURPLE: 
-          return color(60, 22, 66); 
-        case BLUE: 
-          return color(114, 221, 247); 
-        case PINK:
-          return color(213, 106, 160);
-        default: 
-          return color(255, 159, 28); 
-      }  
+  case PURPLE:
+    return color(60, 22, 66);
+  case BLUE:
+    return color(114, 221, 247);
+  case PINK:
+    return color(213, 106, 160);
+  default:
+    return color(255, 159, 28);
+  }
 }
 
 void updateCells() {
-    for (int i=0; i<LEVELS; i++) {
-      int len = cells[i].length;
-      for (int j=0; j < len; j++) {
-          updateCell(i, j);
-      }
+  for (int i=0; i<LEVELS; i++) {
+    int len = cells[i].length;
+    for (int j=0; j < len; j++) {
+      updateCell(i, j);
     }
+  }
 }
 
 // CONSTRAINT: cells[i][j] must be in bounds
 void updateCell(int i, int j) {
   if (i==0) {
-    cells[i][j] = floor(random(5));    
+    cells[i][j] = floor(random(5));
   } else if (random(1) < PROB) {
     int cb = colorBelow(i, j);
     int cd = colorDiagonal(i, j);
     if (cb != PURPLE) {
       cells[i][j] = cb;
-    } else if (cd != PURPLE) {
+    } else {
       cells[i][j] = cd;
     }
   }
