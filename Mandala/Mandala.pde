@@ -1,17 +1,20 @@
 
-
+// Constants for dimensions of the grid
 final int LEVELS = 7;
 final int LEVEL_HEIGHT = 50;
 final int SIZE = 2*LEVELS*LEVEL_HEIGHT;
 
+// Constants for colors
 final int DEFAULT = 0;
 final int BLUE = 1;
 final int PINK = 2;
 final int GREEN = 3;
 
+// Constants for probablilities (can be adjusted)
 final float PROB_DOWN = 0.5;
 final float PROB_DIAG = 0.8;
 
+// 2D array for storing grid state
 int[][] cells;
 
 void settings() {
@@ -30,7 +33,7 @@ void setup() {
 }
 
 void draw() {
-  for (int i=LEVELS-1; i>=0; i--) {
+  for (int i=LEVELS-1; i>=0; i--) { //<>//
     int len = cells[i].length;
     for (int j=0; j < len; j++) {
       fill(getColor(cells[i][j]));
@@ -42,6 +45,7 @@ void draw() {
   updateCells();
 }
 
+// Returns the color associated with the given color constant
 color getColor(int c) {
   switch (c) {
   case BLUE:
@@ -55,6 +59,7 @@ color getColor(int c) {
   }
 }
 
+// Updates all cells in grid
 void updateCells() {
   for (int i=LEVELS-1; i>=0; i--) {
     int len = cells[i].length;
@@ -64,6 +69,7 @@ void updateCells() {
   }
 }
 
+// Updates the jth cell in level i
 // CONSTRAINT: cells[i][j] must be in bounds
 void updateCell(int i, int j) {
   if (i==0) {
@@ -83,11 +89,13 @@ void updateCell(int i, int j) {
   }
 }
 
+// Returns the color constant for the cell directly below the jth cell of level i
 // CONSTRAINT: i != 0, and cells[i][j] must be in bounds
 int colorBelow(int i, int j) {
   return cells[i-1][j/2];
 }
 
+// Returns the color constant for the cell diagonally below the jth cell of level i
 // CONSTRAINT: i != 0, and cells[i][j] must be in bounds
 int colorDiagonal(int i, int j) {
   int len = int(pow(2, i-1));
