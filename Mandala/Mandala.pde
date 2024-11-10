@@ -9,7 +9,8 @@ final int BLUE = 1;
 final int PINK = 2;
 final int ORANGE = 3;
 
-final float PROB = 0.5;
+final float PROB_DOWN = 0.5;
+final float PROB_DIAG = 0.8;
 
 int[][] cells;
 
@@ -59,6 +60,9 @@ void updateCells() {
     for (int j=0; j < len; j++) {
       updateCell(i, j);
     }
+    //if (hasLargeGroup(i, len)) {
+    //  clearLevel(i, len);
+    //}
   }
 }
 
@@ -66,13 +70,17 @@ void updateCells() {
 void updateCell(int i, int j) {
   if (i==0) {
     cells[i][j] = floor(random(5));
-  } else if (random(1) < PROB) {
+  } else {
     int cb = colorBelow(i, j);
-    int cd = colorDiagonal(i, j);
     if (cb != PURPLE) {
-      cells[i][j] = cb;
+      if (random(1) < PROB_DOWN) {
+        cells[i][j] = cb;
+      }
     } else {
-      cells[i][j] = cd;
+      if (random(1) < PROB_DIAG) {
+        int cd = colorDiagonal(i, j);
+        cells[i][j] = cd;
+      }
     }
   }
 }
