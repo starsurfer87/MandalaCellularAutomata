@@ -4,10 +4,10 @@ final int LEVELS = 7;
 final int LEVEL_HEIGHT = 50;
 final int SIZE = 2*LEVELS*LEVEL_HEIGHT;
 
-final int PURPLE = 0;
+final int DEFAULT = 0;
 final int BLUE = 1;
 final int PINK = 2;
-final int ORANGE = 3;
+final int GREEN = 3;
 
 final float PROB_DOWN = 0.5;
 final float PROB_DIAG = 0.8;
@@ -19,11 +19,12 @@ void settings() {
 }
 
 void setup() {
+  stroke(getColor(DEFAULT));
   cells = new int[LEVELS][];
   for (int i=0; i<LEVELS; i++) {
     cells[i] = new int[int(pow(2, i))];
     for (int j=0; j < cells[i].length; j++) {
-      cells[i][j] = PURPLE;
+      cells[i][j] = DEFAULT;
     }
   }
 }
@@ -43,36 +44,33 @@ void draw() {
 
 color getColor(int c) {
   switch (c) {
-  case PURPLE:
-    return color(60, 22, 66);
   case BLUE:
-    return color(114, 221, 247);
+    return #18C6F2;
   case PINK:
-    return color(213, 106, 160);
+    return #EE589E;
+  case GREEN:
+    return #90F750;
   default:
-    return color(255, 159, 28);
+    return #0E132F;
   }
 }
 
 void updateCells() {
-  for (int i=0; i<LEVELS; i++) {
+  for (int i=LEVELS-1; i>=0; i--) {
     int len = cells[i].length;
     for (int j=0; j < len; j++) {
       updateCell(i, j);
     }
-    //if (hasLargeGroup(i, len)) {
-    //  clearLevel(i, len);
-    //}
   }
 }
 
 // CONSTRAINT: cells[i][j] must be in bounds
 void updateCell(int i, int j) {
   if (i==0) {
-    cells[i][j] = floor(random(5));
+    cells[i][j] = floor(random(4));
   } else {
     int cb = colorBelow(i, j);
-    if (cb != PURPLE) {
+    if (cb != DEFAULT) {
       if (random(1) < PROB_DOWN) {
         cells[i][j] = cb;
       }
